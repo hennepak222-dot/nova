@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Panel - Setting Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1100ff;
+            --primary-glow: rgba(56, 4, 141, 0.3);
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 40%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .brand-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 62, 62, 0.1);
+            border: 1px solid rgba(255, 62, 62, 0.2);
+            border-radius: 100px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        /* Grid Layout */
+        .stock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .stock-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stock-card:hover {
+            border-color: rgba(255, 62, 62, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .stock-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 62, 62, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .stock-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stock-stat {
+            background: rgba(0,0,0,0.2);
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 18px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 12px;
+            justify-content: center;
+        }
+
+        /* Status Colors */
+        .status-available { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .status-low { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .status-out { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+        /* Action Section */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 18px 24px;
+            border-radius: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 20px var(--primary-glow);
+        }
+
+        .btn-main:hover {
+            background: #ff5555;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--text-dim);
+        }
+
+        .support-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+
+        .support-link:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .btn-group {
+                flex-direction: column;
+            }
+            .stock-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div class="brand-badge">Official Stock Panel</div>
+            <h1>Nova <span>Services</span></h1>
+            <p class="subtitle">Real-time Discord Boost availability</p>
+        </header>
+
+        <div class="stock-grid">
+            <div class="stock-card">
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="stock-name">1 Month Plan</div>
+                
+                <div class="stock-stat">
+                    <span class="stat-label">Stock</span>
+                    <span class="stat-value">{{ stock_1m }}</span>
+                </div>
+                <div class="stock-stat">
+                    <span class="stat-label">Boosts</span>
+                    <span class="stat-value">{{ boosts_1m }}</span>
+                </div>
+
+                <div class="status-pill status-1m">
+                    </div>
+            </div>
+
+            <div class="stock-card">
+                <div class="card-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="stock-name">3 Month Plan</div>
+                
+                <div class="stock-stat">
+                    <span class="stat-label">Stock</span>
+                    <span class="stat-value">{{ stock_3m }}</span>
+                </div>
+                <div class="stock-stat">
+                    <span class="stat-label">Boosts</span>
+                    <span class="stat-value">{{ boosts_3m }}</span>
+                </div>
+
+                <div class="status-pill status-3m">
+                    </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="btn-group">
+                <a href="/panel/redeem" class="btn btn-main">
+                    <i class="fas fa-ticket-alt"></i> Redeem Key
+                </a>
+                <a href="/" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Home
+                </a>
+            </div>
+            <a href="#" class="support-link">Need a custom plan? Contact Support</a>
+            <p style="font-size: 11px; color: #444; margin-top: 20px;">Setting Guide © 2026</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const updateStatus = (selector, stock) => {
+                const el = document.querySelector(selector);
+                const val = parseInt(stock);
+                
+                if (val <= 0) {
+                    el.className = 'status-pill status-out';
+                    el.innerHTML = '<i class="fas fa-times-circle"></i> Out of Stock';
+                } else if (val < 10) {
+                    el.className = 'status-pill status-low';
+                    el.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Limited Stock';
+                } else {
+                    el.className = 'status-pill status-available';
+                    el.innerHTML = '<i class="fas fa-check-circle"></i> Fully Stocked';
+                }
+            };
+
+            updateStatus('.status-1m', '{{ stock_1m }}');
+            updateStatus('.status-3m', '{{ stock_3m }}');
+        });
+    </script>
+</body>
+</html>

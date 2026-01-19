@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Services – Redeem Key</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --primary:#1700e4;
+    --primary-dark:#6f00ff;
+    --bg:#050505;
+    --panel:#0b0b0b;
+    --border:rgba(255,255,255,.08);
+    --text:#fff;
+    --muted:#b3b3b3;
+    --radius:16px;
+    --transition:.25s ease;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+    font-family:Inter,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+/* ===== Layout ===== */
+.layout {
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height:100vh;
+}
+
+.left {
+    background:
+        radial-gradient(circle at top left, rgba(220,38,38,.15), transparent 60%),
+        var(--panel);
+    padding:60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:30px;
+    border-right:1px solid var(--border);
+}
+
+.right {
+    padding:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* ===== Left panel ===== */
+.logo {
+    font-size:32px;
+    font-weight:700;
+}
+.logo span { color:var(--primary); }
+
+.left h1 {
+    font-size:40px;
+    line-height:1.2;
+}
+
+.left p {
+    color:var(--muted);
+    max-width:420px;
+}
+
+.features {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.feature {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    padding:14px;
+    border-radius:12px;
+    font-size:14px;
+}
+
+/* ===== Form card ===== */
+.card {
+    width:100%;
+    max-width:420px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:35px;
+}
+
+.card h2 {
+    font-size:26px;
+    margin-bottom:8px;
+}
+
+.card p {
+    font-size:14px;
+    color:var(--muted);
+    margin-bottom:25px;
+}
+
+/* ===== Inputs ===== */
+.input-group {
+    margin-bottom:16px;
+}
+
+.input-group input {
+    width:100%;
+    padding:14px 15px;
+    background:#0e0e0e;
+    border:1px solid var(--border);
+    border-radius:12px;
+    color:var(--text);
+    font-size:14px;
+    transition:var(--transition);
+}
+
+.input-group input:focus {
+    outline:none;
+    border-color:var(--primary);
+}
+
+/* ===== Optional ===== */
+.optional-toggle {
+    margin:10px 0;
+    font-size:13px;
+    cursor:pointer;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.optional {
+    display:none;
+    margin-top:10px;
+}
+
+/* ===== Button ===== */
+button {
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+button:hover { transform:translateY(-2px); }
+
+/* ===== Popup ===== */
+.popup {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+.popup-box {
+    background:#0e0e0e;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:25px;
+    width:90%;
+    max-width:380px;
+    text-align:center;
+}
+
+.popup-box.success { border-top:3px solid #22c55e; }
+.popup-box.error { border-top:3px solid #ef4444; }
+
+/* ===== Mobile ===== */
+@media(max-width:900px){
+    .layout { grid-template-columns:1fr; }
+    .left { padding:40px; }
+    .right { padding:40px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- LEFT -->
+    <div class="left">
+        <div class="logo">Nova <span>Services</span></div>
+
+        <h1>Boost Bot<br>Key Redemption</h1>
+        <p>Redeem your boost key instantly and apply it to your Discord server with maximum reliability.</p>
+
+        <div class="features">
+            <div class="feature"><i class="fa-solid fa-bolt"></i> Instant Apply</div>
+            <div class="feature"><i class="fa-solid fa-shield"></i> Safe & Secure</div>
+            <div class="feature"><i class="fa-solid fa-server"></i> Any Server</div>
+            <div class="feature"><i class="fa-solid fa-check"></i> No Watermark</div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="card">
+            <h2>Redeem Key</h2>
+            <p>Enter your key and server invite</p>
+
+            <form id="redeemForm">
+                <div class="input-group">
+                    <input type="text" name="key" placeholder="Redeem key" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="invite" placeholder="Discord invite link" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email address" required>
+                </div>
+
+                <div class="optional-toggle" id="toggleOptional">
+                    <i class="fa-solid fa-sliders"></i> Optional customization
+                </div>
+
+                <div class="optional" id="optionalFields">
+                    <div class="input-group">
+                        <input type="text" name="nickname" placeholder="Custom nickname">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="bio" placeholder="Custom bio">
+                    </div>
+                </div>
+
+                <button type="submit">Redeem Now</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup">
+    <div class="popup-box" id="popupBox">
+        <p id="popupMsg"></p>
+        <br>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<script>
+const toggle = document.getElementById('toggleOptional');
+const optional = document.getElementById('optionalFields');
+
+toggle.onclick = () => {
+    optional.style.display = optional.style.display === 'block' ? 'none' : 'block';
+};
+
+function showPopup(type,msg){
+    const p=document.getElementById('popup');
+    const box=document.getElementById('popupBox');
+    document.getElementById('popupMsg').textContent=msg;
+    box.className='popup-box '+type;
+    p.style.display='flex';
+}
+function closePopup(){ document.getElementById('popup').style.display='none'; }
+
+document.getElementById('redeemForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    fetch('/api/sys/redeem',{method:'POST',body:new FormData(e.target)})
+    .then(r=>r.json())
+    .then(d=>{
+        showPopup(d.success?'success':'error', d.message || d.error);
+    })
+    .catch(()=>showPopup('error','Network error'));
+});
+</script>
+
+</body>
+</html>
